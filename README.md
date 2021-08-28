@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @ff1211
 - 👀 I’m interested in FPGA/SOC development.
-- 🌱 I’m currently learning data center acceleration by using FPGA.
+- 🌱 I’m currently learning zynq soc.
 - 💞️ I’m looking to collaborate on ...
 - 📫 How to reach me ...
 
