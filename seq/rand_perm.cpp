@@ -1,4 +1,4 @@
-#include "rand_perm.hpp"
+#include "rand_perm.h"
 
 void ran_perm1(vector<int> & permutation){
     uniform_int_distribution<int> rand(1, permutation.size()); // distribution in range [1, size]

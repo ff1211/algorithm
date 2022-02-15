@@ -1,4 +1,4 @@
-#include "math_alg.hpp"
+#include "math_alg.h"
 
 long long power_int1 (int base, unsigned int power){
     long long result = 1;
