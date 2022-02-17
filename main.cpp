@@ -3,7 +3,7 @@
 #include <vector>
 #include <string.h>
 #include <time.h>
-#include "seq/rand_perm.h"
+#include "./seq/rand_perm.h"
 
 using namespace std;
 
