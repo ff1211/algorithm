@@ -1,6 +1,8 @@
 #include "rand_perm.h"
 
 void ran_perm1(vector<int> & permutation){
+    random_device dev;
+    mt19937 rng(dev());
     uniform_int_distribution<int> rand(1, permutation.size()); // distribution in range [1, size]
 
     for (int i = 0; i < permutation.size(); i++){
@@ -20,6 +22,8 @@ void ran_perm1(vector<int> & permutation){
 }
 
 void ran_perm2(vector<int> & permutation){
+    random_device dev;
+    mt19937 rng(dev());
     uniform_int_distribution<unsigned int> rand(1, permutation.size()); // distribution in range [1, size]
     vector<bool> repeat(permutation.size(), 0);
 
@@ -36,6 +40,8 @@ void ran_perm2(vector<int> & permutation){
 }
 
 void ran_perm3(vector<int> & permutation){
+    random_device dev;
+    mt19937 rng(dev());
     for (int i = 0; i < permutation.size(); i++)
         permutation[i] = i + 1;
 

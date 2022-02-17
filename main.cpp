@@ -1,8 +1,9 @@
 #include <iostream>
+#include <random>
 #include <vector>
 #include <string.h>
 #include <time.h>
-#include "rand_perm.hpp"
+#include "seq/rand_perm.h"
 
 using namespace std;
 
