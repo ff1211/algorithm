@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-I../seq
+CFLAGS=-I../seq 
 
-mainmake: main.o ./seq/rand_perm.o
-	$(CC) $(CFLAGS) -o main main.o ./seq/rand_perm.o
+mainmake: main.o math/math_alg.o
+	$(CC) $(CFLAGS) -o main main.o math/math_alg.o

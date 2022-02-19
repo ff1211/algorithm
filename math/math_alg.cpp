@@ -1,7 +1,7 @@
 #include "math_alg.h"
 
-long long power_int1 (int base, unsigned int power){
-    long long result = 1;
+long power_int1 (long base, unsigned int power){
+    long result = 1;
 
     for (int i = 0; i < power; i++)
         result *= base;
@@ -10,7 +10,7 @@ long long power_int1 (int base, unsigned int power){
 }
 
 //recursion
-long long power_int2 (int base, unsigned int power){
+long power_int2 (long base, unsigned int power){
     if(power == 0)
         return 1;
     else if(power == 1)
@@ -19,4 +19,14 @@ long long power_int2 (int base, unsigned int power){
         return power_int2(base*base, power/2);
     else
         return power_int2(base*base, power/2) * base;
+}
+
+long horner_rule (long x, const vector<int> a){
+    long poly = 0;
+    int n = a.size() - 1;
+
+    for (int i = n; i >= 0; i--)
+        poly = x * poly + a[i];
+
+    return poly;
 }
