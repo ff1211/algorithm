@@ -50,3 +50,21 @@ void ran_perm3(vector<int> & permutation){
         swap(permutation[i], permutation[rand(rng)]);
     }  
 }
+
+int binary_search(int x, const vector<int> & seq){
+    int low = 0, high = seq.size()-1;
+    int mid;
+
+    while (high >= low){
+        mid = (high+low)/2;
+
+        if(x < seq[mid])
+            high = mid - 1;
+        else if(x == seq[mid])
+            return mid;
+        else
+            low = mid + 1;
+    }
+
+    return -1;
+}
