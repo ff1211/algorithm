@@ -1,4 +1,4 @@
-#include "rand_perm.h"
+#include "seq_alg.h"
 
 void ran_perm1(vector<int> & permutation){
     random_device dev;
