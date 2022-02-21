@@ -15,10 +15,24 @@ long power_int2 (long base, unsigned int power){
         return 1;
     else if(power == 1)
         return base;
-    else if(!(power % 2))
+    else if(!(power & 1))
         return power_int2(base*base, power/2);
     else
         return power_int2(base*base, power/2) * base;
+}
+
+//no recursion
+long power_int3 (long base, unsigned int power){
+    long result = 1;
+    
+    while (power){
+        if(power & 1)
+            result = result * base;
+
+        base = base * base;
+        power = power >> 1;
+    }
+    return result;
 }
 
 long horner_rule (long x, const vector<int> a){
@@ -62,4 +76,12 @@ string adder_str(const string & a, const string & b) {
     }
     
     return result;
+}
+
+bool if_prime(unsigned int n){
+    if(n <= 1)
+        return 0;
+    for(int i = 2; i*i <= n; i++)
+        if (n % i == 0) return 0;
+    return 1;
 }

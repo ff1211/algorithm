@@ -68,3 +68,25 @@ int binary_search(int x, const vector<int> & seq){
 
     return -1;
 }
+
+bool major_e(const vector<int> & a, int & major_e){
+    int N = a.size();
+    return 1; 
+}
+
+bool search_matrix1(int x, unsigned int N, const vector<int> & a){
+    int i = 0;
+    int j = N-1;
+
+    while (j >= 0 && i < N){
+        int a_ij = a[i*N + j];
+        if(x > a_ij)
+            i++;
+        else if(x == a_ij)
+            return 1;
+        else
+            j--;
+    }
+    
+    return 0; 
+}
