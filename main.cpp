@@ -12,11 +12,11 @@ int main(int argc, char * argv[]){
 
     const int N = atoi(argv[1]);
 
-    vector<int> a{1, 2, 3};
+    vector<int> a{1, 1, 2, 3};
 
     clock_t start, end;
     double cpu_time_used, run_time;
-    int result;
+    vector<int> ans;
     // string a = "9";
     // string b = "99999999999999999999999999999999999999999999999999999999999994";
 
@@ -24,7 +24,7 @@ int main(int argc, char * argv[]){
 
     for (int i = 0; i < 10; i++){
         start = clock();
-        result = binary_search(N, a);
+        ans = major_ele(a);
         end = clock();
         run_time += (double)(end - start);
     }
@@ -32,7 +32,10 @@ int main(int argc, char * argv[]){
     cpu_time_used = (run_time / 10.0) / CLOCKS_PER_SEC;
 
     cout << fixed << "cpu time: " << cpu_time_used << "s" << endl;
-    cout << "result: " << result << endl;
+    if(ans.size() == 0)
+        cout << "no major element!" << endl;
+    else
+        cout << "major element: " << ans[0] <<endl;
 
     return 0;
 }

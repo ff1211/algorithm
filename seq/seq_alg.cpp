@@ -69,9 +69,41 @@ int binary_search(int x, const vector<int> & seq){
     return -1;
 }
 
-bool major_e(const vector<int> & a, int & major_e){
+vector<int> major_ele_candi(const vector<int> & a){
+    vector<int> candi;
     int N = a.size();
-    return 1; 
+
+    if(N < 2 || (N == 2 && a[0] != a[1]))
+        return a;
+
+    int nn = N - 1;
+    for (int i = 0; i < nn; i+=2)
+        if(a[i] == a[i+1])
+            candi.push_back(a[i]);
+    if(N & 1)
+        candi.push_back(a[nn]);
+    
+    return major_ele_candi(candi);
+}
+
+vector<int> major_ele(const vector<int> & a){
+    vector<int> candi = major_ele_candi(a);
+    vector<int> ans;
+    int major_ele[2] = {0, 0};
+    
+    int n = candi.size(), N = a.size();
+    int N_div2 = N / 2;
+    int candi_num[N];
+
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < N; j++)
+            if(candi[i] == a[j])
+                candi_num[i]++;
+
+        if(candi_num[i] > N_div2)
+            ans.push_back(candi[i]);
+    }
+    return ans;
 }
 
 bool search_matrix1(int x, unsigned int N, const vector<int> & a){
@@ -87,6 +119,27 @@ bool search_matrix1(int x, unsigned int N, const vector<int> & a){
         else
             j--;
     }
-    
     return 0; 
+}
+
+int max_value0(const vector<int> & a){
+    int N = a.size();
+    int candi = 0;
+
+    for (int k = 0; k < N; k++)
+        if(a[k] > candi)
+            candi = a[k];   
+    return candi + candi;
+}
+
+int max_value1(const vector<int> & a){
+    int N = a.size();
+    int mini = a[0];
+    int result = 0;
+
+    for (int k = 0; k < N; k++){
+        mini = min(a[k], mini);
+        result = max(result, a[k] - mini);
+    }
+    return result;
 }
