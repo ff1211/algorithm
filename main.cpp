@@ -12,7 +12,7 @@ int main(int argc, char * argv[]){
 
     const int N = atoi(argv[1]);
 
-    vector<int> a{1, 1, 2, 3};
+    vector<int> a{1, 1, 1, 2, 3, 2, 1};
 
     clock_t start, end;
     double cpu_time_used, run_time;

@@ -6,16 +6,17 @@
     "configurations": [
       {
         "name": "clang++ - Build and debug active file",
-        "type": "cppdbg",
+        "type": "lldb",
         "request": "launch",
-        "program": "${fileDirname}/${fileBasenameNoExtension}",
+        "program": "${fileDirname}/main",
         "args": ["1"],
         "stopAtEntry": true,
         "cwd": "${workspaceFolder}",
         "environment": [],
         "externalConsole": false,
         "MIMode": "lldb",
-        "preLaunchTask": "clang++ build active file"
+        "preLaunchTask": "clang++ build active file",
+        "targetArchitecture": "arm64"
       }
     ]
   }

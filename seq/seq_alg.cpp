@@ -89,11 +89,10 @@ vector<int> major_ele_candi(const vector<int> & a){
 vector<int> major_ele(const vector<int> & a){
     vector<int> candi = major_ele_candi(a);
     vector<int> ans;
-    int major_ele[2] = {0, 0};
     
     int n = candi.size(), N = a.size();
     int N_div2 = N / 2;
-    int candi_num[N];
+    int candi_num[2]={};
 
     for (int i = 0; i < n; i++){
         for (int j = 0; j < N; j++)
