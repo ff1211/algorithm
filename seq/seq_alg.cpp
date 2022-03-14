@@ -70,13 +70,13 @@ int binary_search(int x, const vector<int> & seq){
 }
 
 vector<int> major_ele_candi(const vector<int> & a){
-    vector<int> candi;
     int N = a.size();
-
     if(N < 2 || (N == 2 && a[0] != a[1]))
         return a;
 
+    vector<int> candi;
     int nn = N - 1;
+    candi.reserve((N+1)/2);
     for (int i = 0; i < nn; i+=2)
         if(a[i] == a[i+1])
             candi.push_back(a[i]);
@@ -99,8 +99,10 @@ vector<int> major_ele(const vector<int> & a){
             if(candi[i] == a[j])
                 candi_num[i]++;
 
-        if(candi_num[i] > N_div2)
+        if(candi_num[i] > N_div2){
             ans.push_back(candi[i]);
+            return ans;
+        }
     }
     return ans;
 }

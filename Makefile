@@ -1,5 +1,8 @@
-CC=g++
-CFLAGS=-std=c++11
+CC		=	clang++
+CFLAGS	=	-std=c++11
 
-mainmake: main.o math/math_alg.o
-	$(CC) $(CFLAGS) -o main main.o math/math_alg.o
+main:
+	$(CC) $(CFLAGS) main.cpp seq/seq_alg.cpp -o main
+
+clean:
+	rm main

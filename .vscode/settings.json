@@ -1,0 +1,23 @@
+{
+    "files.associations": {
+        "iterator": "cpp",
+        "__bit_reference": "cpp",
+        "__hash_table": "cpp",
+        "__split_buffer": "cpp",
+        "__string": "cpp",
+        "array": "cpp",
+        "bitset": "cpp",
+        "deque": "cpp",
+        "functional": "cpp",
+        "initializer_list": "cpp",
+        "memory": "cpp",
+        "queue": "cpp",
+        "sstream": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "*.tcc": "cpp",
+        "__locale": "cpp"
+    }
+}
