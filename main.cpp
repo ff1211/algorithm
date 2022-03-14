@@ -1,6 +1,7 @@
 #include <iostream>
 #include <random>
 #include <vector>
+#include <iterator>
 #include <string>
 #include <time.h>
 #include "seq/seq_alg.h"
@@ -10,9 +11,11 @@ using namespace std;
 
 int main(int argc, char * argv[]){
 
-    const int N = atoi(argv[1]);
+    // const int N = atoi(argv[1]);
 
-    vector<int> a{1, 1, 1, 2, 3, 2, 1};
+    // vector<int> a{1, 1, 1, 2, 3, 2, 1};
+
+    // vector<int>::const_iterator pta = a.begin();
 
     clock_t start, end;
     double cpu_time_used, run_time;
@@ -21,10 +24,9 @@ int main(int argc, char * argv[]){
     // string b = "99999999999999999999999999999999999999999999999999999999999994";
 
     run_time = 0.0;
-
-    for (int i = 0; i < 10; i++){
+    
+    for (int i = 0; i < 1; i++){
         start = clock();
-        ans = major_ele(a);
         end = clock();
         run_time += (double)(end - start);
     }
@@ -32,10 +34,10 @@ int main(int argc, char * argv[]){
     cpu_time_used = (run_time / 10.0) / CLOCKS_PER_SEC;
 
     cout << fixed << "cpu time: " << cpu_time_used << "s" << endl;
-    if(ans.size() == 0)
-        cout << "no major element!" << endl;
-    else
-        cout << "major element: " << ans[0] <<endl;
+    // if(ans.empty())
+    //     cout << "no major element!" << endl;
+    // else
+    //     cout << "major element: " << ans[0] <<endl;
 
     return 0;
 }
