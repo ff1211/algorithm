@@ -20,6 +20,7 @@
         "*.tcc": "cpp",
         "__locale": "cpp",
         "random": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "list": "cpp"
     }
 }

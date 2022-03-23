@@ -6,7 +6,7 @@
 #include <time.h>
 #include "seq/seq_alg.h"
 #include "math/math_alg.h"
-#include "data_structure/data_structure.h"
+#include "data_structure/List.h"
 using namespace std;
 
 int main(int argc, char * argv[]){
@@ -25,16 +25,16 @@ int main(int argc, char * argv[]){
     
     cpu_time_used = (run_time / 10.0) / CLOCKS_PER_SEC;
 
-    list<int> chou;
+    List<int> chou;
     int chou_num[] = {1,1,4,5,1,4};
     for (size_t i = 0; i < 6; i++)
         chou.push_back(chou_num[i]);
 
-    for(list<int>::iterator it = chou.begin(); it != chou.end(); ++it)
+    for(List<int>::iterator it = chou.begin(); it != chou.end(); ++it)
         cout << *it << " ";
     cout << endl;
 
-    for(list<int>::iterator it = chou.begin(); it != chou.end(); ++it)
+    for(List<int>::iterator it = chou.begin(); it != chou.end(); ++it)
         cout << *it << " ";
     cout << endl;
 
