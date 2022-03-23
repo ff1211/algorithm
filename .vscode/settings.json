@@ -18,6 +18,8 @@
         "unordered_map": "cpp",
         "vector": "cpp",
         "*.tcc": "cpp",
-        "__locale": "cpp"
+        "__locale": "cpp",
+        "random": "cpp",
+        "iostream": "cpp"
     }
 }

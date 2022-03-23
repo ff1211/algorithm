@@ -188,7 +188,7 @@ public:
         const_iterator() { current = nullptr; }
 
         //operators overlaod
-        const obj_t & operator*() { return retrieve(); }
+        const obj_t & operator*() const { return retrieve(); }
         const_iterator operator++() {
             current = current->next;
             return *this;
@@ -202,7 +202,8 @@ public:
         bool operator!=(const const_iterator & rhs) const { return rhs.current != current; }
     protected:
         node * current;
-        obj_t & retrieve() const { return current->data; }
+        // const reference
+        const obj_t & retrieve() const { return current->data; }
         const_iterator(node *p) { current = p; }
 
     friend class List<obj_t>;
@@ -212,7 +213,7 @@ public:
     class iterator : public const_iterator{
     public:
         // constructor
-        iterator() {}
+        iterator() : const_iterator() {}
         //operators overlaod
         obj_t & operator*() { return this->retrieve(); }
         iterator & operator++() {
@@ -224,7 +225,18 @@ public:
             ++( *this );
             return old;
         }
+        iterator & operator--() {
+            this->current = this->current->prev;
+            return *this;
+        }
+        iterator operator-- (int) {
+            iterator old = *this;
+            --( *this );
+            return old;
+        }
     protected:
+        // non-const reference
+        obj_t & retrieve() const { return this->current->data; }
         iterator( node *p ) : const_iterator(p) { }
 
     friend class List<obj_t>;
@@ -248,61 +260,65 @@ public:
             push_back(x);
     }
 
-    ~List() { 
-        iterator it(m_head);
-
-        while(it != m_tail)
-            it = erase(it);
+    ~List() {
+        // delete nodes between head and tail
+        erase(this->begin(), this->end());
+        
+        // delete head and tail
+        delete this->m_head;
         delete this->m_tail;
     }
 
     // insert elements(lvalue reference)
-    iterator insert(iterator position, size_t size = 0, const obj_t & val = obj_t{}) {
-        iterator it(position);
+    iterator insert(iterator it, size_t size = 0, const obj_t & val = obj_t{}) {
         // if size == 0 or the position to insert is tail, return
-        if(size == 0 || position.current == m_tail)
+        if(size == 0 || it.current == m_tail)
             return it;
 
-        // the node before insertion
-        node * prev_node = position.current;
-        // the node after insertion
-        node * after_node = position.current->next;
         // create inserted nodes
-        for (size_t i = 0; i < size; i++){
-            prev_node->next = new node(val);
-            prev_node->next->prev = prev_node;
-            ++it;
-        }
-        after_node->prev = prev_node->next;
-        m_size = m_size + size;
+        for (size_t i = 0; i < size; i++)
+            insert(it, val);
+        --it;
         return it;
     }
 
-    // insert single element(rvalue reference)
-    iterator insert(const_iterator position, const obj_t && val = obj_t{}) {
-        iterator it(position);
-        it.current->next = new node(val);
-        ++it;
+    // insert single element before it(lvalue reference)
+    iterator insert(iterator it, const obj_t & val = obj_t{}) {
+        node * ptc = it.current;
+        node * new_node = new node(val, ptc->prev, ptc);
+        ptc->prev->next = new_node;
+        ptc->prev = new_node;
+        --it;
+        ++m_size;
+        return it;
+    }
+
+    // insert single element before it(rvalue reference)
+    iterator insert(iterator it, const obj_t && val) {
+        node * ptc = it.current;
+        node * new_node = new node(std::move(val), ptc->prev, ptc);
+        ptc->prev->next = new_node;
+        ptc->prev = new_node;
+        --it;
         ++m_size;
         return it;
     }
 
     // delete element 
     iterator erase(iterator it) {
-        it.current->prev->next = it.current->next;
-        it.current->next->prev = it.current->prev;
-        delete it.current;
+        node * ptc = it.current;
+        iterator ret_val(ptc->next);
+        ptc->prev->next = ptc->next;
+        ptc->next->prev = ptc->prev;
+        delete ptc;
         --m_size;
-        ++it;
-        return it;
+        return ret_val;
     }
 
-    // delete continuous element 
+    // delete continuous element
     iterator erase(iterator begin, iterator end) {
-        begin.current->prev->next = end.current;
-        end.current->prev = begin.current->prev;
-        for(iterator itr = begin; itr != end;)
-            itr = erase(itr);
+        for(iterator it = begin; it != end; ++it)
+            erase(it);
         return end;
     }
 
