@@ -98,16 +98,20 @@ public:
     friend class List<obj_t>;
     };
 public:
-    List(size_t size = 0, const obj_t & val = obj_t{}) {
+    // create a empty list
+    List() { init(); }
+    // creat a "size" long list
+    explicit List(size_t size, const obj_t & val = obj_t{}) {
         // creat head and tail
         init();
         // if size == 0 return
         if(size == 0)
             return;
         // create the list
-        iterator begin_pos(m_head);
+        iterator begin_pos = this->begin();
         insert(begin_pos, size, val);
     }
+    // copy constructor
     List(const List<obj_t> &rhs) {
         // creat head and tail
         init();
@@ -115,20 +119,19 @@ public:
         for(auto & x : rhs)
             push_back(x);
     }
-
+    // destructor
     ~List() {
         // delete nodes between head and tail
         erase(this->begin(), this->end());
-        
         // delete head and tail
         delete this->m_head;
         delete this->m_tail;
     }
 
     // insert elements(lvalue reference)
-    iterator insert(iterator it, size_t size = 0, const obj_t & val = obj_t{}) {
+    iterator insert(iterator it, size_t size, const obj_t & val) {
         // if size == 0 or the position to insert is tail, return
-        if(size == 0 || it.current == m_tail)
+        if(size == 0 || it.current == m_head)
             return it;
 
         // create inserted nodes
@@ -139,7 +142,7 @@ public:
     }
 
     // insert single element before it(lvalue reference)
-    iterator insert(iterator it, const obj_t & val = obj_t{}) {
+    iterator insert(iterator it, const obj_t & val) {
         node * ptc = it.current;
         node * new_node = new node(val, ptc->prev, ptc);
         ptc->prev->next = new_node;

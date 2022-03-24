@@ -1,17 +1,24 @@
 #include <iostream>
-#include <random>
-#include <vector>
-#include <iterator>
-#include <string>
 #include <time.h>
-#include "seq/seq_alg.h"
-#include "math/math_alg.h"
 #include "data_structure/List.h"
+
 using namespace std;
 
-int main(int argc, char * argv[]){
+void printLots(const List<int> & L, const List<size_t> & P) {
+    List<int>::const_iterator it_l = L.begin();
+    int it_times = 0;
+    List<size_t>::const_iterator it_p = P.begin();
+    List<size_t>::const_iterator it_n = P.end();
+    for (; it_p != it_n; ++it_p){
+        while (it_times != *it_p) {
+            ++it_l;
+            ++it_times;
+        }
+        std::cout << *it_l << std::endl;
+    }
+}
 
-    // const int N = atoi(argv[1]);
+int main(int argc, char * argv[]){
 
     clock_t start, end;
     double cpu_time_used, run_time;
@@ -22,27 +29,25 @@ int main(int argc, char * argv[]){
         end = clock();
         run_time += (double)(end - start);
     }
+    List<int> L(10);
+    List<size_t> P(5);
+    std::size_t index[] = {1, 2, 5, 7, 9};
+
+    int i = 0;
+    for (List<int>::iterator it = L.begin(); it != L.end(); ++it){
+        *it = i;
+        ++i;
+    }
+
+    i = 0;
+    for (List<size_t>::iterator it = P.begin(); it != P.end(); ++it){
+        *it = index[i];
+        ++i;
+    }
+
+    printLots(L, P);
     
     cpu_time_used = (run_time / 10.0) / CLOCKS_PER_SEC;
-
-    List<int> chou;
-    int chou_num[] = {1,1,4,5,1,4};
-    for (size_t i = 0; i < 6; i++)
-        chou.push_back(chou_num[i]);
-
-    for(List<int>::iterator it = chou.begin(); it != chou.end(); ++it)
-        cout << *it << " ";
-    cout << endl;
-
-    for(List<int>::iterator it = chou.begin(); it != chou.end(); ++it)
-        cout << *it << " ";
-    cout << endl;
-
-    cout << fixed << "cpu time: " << cpu_time_used << "s" << endl;
-    // if(ans.empty())
-    //     cout << "no major element!" << endl;
-    // else
-    //     cout << "major element: " << ans[0] <<endl;
 
     return 0;
 }
