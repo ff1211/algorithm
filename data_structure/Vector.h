@@ -21,8 +21,22 @@ public:
         #endif
         m_size = size;
         m_capacity = size + SPARE_CAPACITY;
-        m_data = new obj_t[size * 2];
+        m_data = new obj_t[m_capacity];
     }
+
+    //use arrary for construction
+    Vector(obj_t * array) {
+        #ifdef DEBUG
+        std::cout << "Constructor is called!" << std::endl;
+        #endif
+        size_t size = 0;
+        while (array[size] != NULL)
+            ++size;
+        m_size = size;
+        m_capacity = size;
+        m_data = std::move(array);
+    }
+
     //copy constructor
     Vector(const Vector & rhs) {
         #ifdef DEBUG
@@ -124,7 +138,7 @@ public:
         if(m_size + 1 > m_capacity)
             reserve(2 * m_size + 1);
         
-        m_data[m_size] = std::move(val);
+        m_data[m_size] = val;
         m_size++;
     }
 

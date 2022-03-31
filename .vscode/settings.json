@@ -75,6 +75,11 @@
         "typeinfo": "cpp",
         "utility": "cpp",
         "memory_resource": "cpp",
-        "stop_token": "cpp"
+        "stop_token": "cpp",
+        "fstream": "cpp",
+        "codecvt": "cpp",
+        "iomanip": "cpp",
+        "stack": "cpp",
+        "filesystem": "cpp"
     }
 }

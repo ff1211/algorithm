@@ -54,6 +54,25 @@ public:
             ++( *this );
             return old;
         }
+        const_iterator & operator--() {
+            this->current = this->current->prev;
+            return *this;
+        }
+        const_iterator operator-- (int) {
+            const_iterator old = *this;
+            --( *this );
+            return old;
+        }
+        // return the iterator ahead of current iterator
+        const_iterator operator+( int k ) const {
+            const_iterator it(this->current);
+            for(int i = 0; i < k; ++i)
+                if(it.current != nullptr)
+                    ++it;
+                else 
+                    break;
+            return it;
+        };
         bool operator==(const const_iterator & rhs) const { return rhs.current == current; }
         bool operator!=(const const_iterator & rhs) const { return rhs.current != current; }
     protected:
@@ -90,6 +109,16 @@ public:
             --( *this );
             return old;
         }
+        // return the iterator ahead of current iterator
+        iterator operator+( int k ) const {
+            iterator it(this->current);
+            for(int i = 0; i < k; ++i)
+                if(it.current != nullptr)
+                    ++it;
+                else 
+                    break;
+            return it;
+        };
     protected:
         // non-const reference
         obj_t & retrieve() const { return this->current->data; }
@@ -184,14 +213,60 @@ public:
     // add element at the end.
     void push_back(const obj_t & val) { insert(m_tail, val); }
     void push_back(obj_t && val) { insert(m_tail, val); }
-    // add element at the begin.
+    // delete element at the end.
+    void pop_back() { erase(--end()); }
+    // add element at the beginning.
     void push_front(const obj_t & val) { insert(m_head, val); }
     void push_front(obj_t && val) { insert(m_head, val); }
+    // delete element at the beginning.
+    void pop_front() { erase(begin()); }
 
     iterator begin() { iterator it(m_head); return ++it; }
     iterator end() { iterator it(m_tail); return it; }
     const_iterator begin() const { const_iterator it(m_head); return ++it; }
     const_iterator end() const { const_iterator it(m_tail); return it; }
+
+    // Return size of the list.
+    size_t size() const { return m_size; }
+
+    // Swap two adjacent elements by adjusting only the links
+    void swap_ele(List<obj_t>::iterator it) {
+        if(it == this->begin() || it == this->end())
+            return;
+        
+        node * ptc = it.current;
+        node * ptp = ptc->prev;
+        node * ptpp = ptc->prev->prev;
+        node * ptn = ptc->next;
+
+        ptpp->next = ptc;
+        ptp->next = ptc->next;
+        ptp->prev = ptc;
+        ptc->next = ptp;
+        ptc->prev = ptp->prev;
+        ptn->prev = ptp;
+    }
+    // Removes all the items from lst, placing them prior to position in List *this.
+    void splice( iterator position, List<obj_t> & lst ) {
+        node * ptc = position.current;
+        node * ptp = ptc->prev;
+        // pointer to lst's first node.
+        node * ptlb = lst.begin().current;
+        // pointer to lst's last node.
+        node * ptll = (--lst.end()).current;
+        // change link relationship of node before position.
+        ptp->next = ptlb;
+        ptlb->prev = ptp;
+        // change link relationship of node on position.
+        ptc->prev = ptll;
+        ptll->next = ptc;
+        // Change m_size
+        this->m_size = this->m_size + lst.m_size;
+        // Clean lst
+        lst.m_head->next = lst.m_tail;
+        lst.m_tail->prev = lst.m_head;
+        lst.m_size = 0;
+    }
 };
 
 #endif

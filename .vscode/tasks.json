@@ -13,6 +13,7 @@
           "-g",
           "${fileDirname}/../main.cpp",
           "${fileDirname}/../seq/seq_alg.cpp",
+          "${fileDirname}/../data_structure/operation.cpp",
           "-o",
           "${fileDirname}/main"
         ], 
