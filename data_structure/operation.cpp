@@ -78,3 +78,46 @@ int balancing_symb(std::string file_name) {
     input_file.close();
     return stack.size()? -2 : 1;
 };
+
+// Check operator's priority
+// If *, / return 1.
+// If +, - return 0.
+// If alphabet, return -1.
+int check_priority(char op) {
+    if(op == '*' || op == '/')
+        return 1;
+    else if(op == '+' || op == '-')
+        return 0;
+    else
+        return -1;
+}
+// Infix to Postfix Conversion
+Vector<char> Infix2Postfix(const Vector<char> & infix) {
+    Vector<char> ans;
+    Vector<char> stack;
+    for(Vector<char>::const_iterator it = infix.begin(); it != infix.end(); ++it) {
+        int priority = check_priority(*it);
+        if( priority == -1 )
+            ans.push_back(*it);
+        else if( stack.empty() )
+            stack.push_back(*it);
+        else if(priority > check_priority( stack.back() ) )
+            stack.push_back(*it);
+        else{
+            ans.push_back(stack.back());
+            stack.pop_back();
+            while (priority <= check_priority( stack.back() )){
+                ans.push_back(stack.back());
+                stack.pop_back();
+            }
+            stack.push_back(*it);
+        }
+    }
+
+    while (stack.size() != 0){
+        ans.push_back(stack.back());
+        stack.pop_back();
+    }
+
+    return ans;
+}

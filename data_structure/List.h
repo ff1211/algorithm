@@ -1,8 +1,6 @@
 #ifndef LIST_TYPE
 #define LIST_TYPE
 
-#define DEBUG
-
 template <typename obj_t>
 class List
 {

@@ -1,26 +1,22 @@
 #include <iostream>
 #include <time.h>
 #include "data_structure/List.h"
+#include "data_structure/Vector.h"
 #include "data_structure/operation.h"
 #include "data_structure/Queue.h"
 
 using namespace std;
 
 int main(int argc, char * argv[]){
-    Queue<int> q;
+    Vector<char> infix;
+    char a[] = "a+b*c+d-e*f*g";
+    for (int i = 0; i < 13; i++)
+        infix.push_back(a[i]);
 
-    for (int i = 0; i < 16; i++)
-        q.push(i+1);
+    Vector<char> postfix = Infix2Postfix(infix);
 
-    for (int i = 0; i < 8; i++)
-        q.pop();
-
-    for (int i = 0; i < 16; i++)
-        q.push(i+17);
-
-    while(q.size()) {
-        cout << q.front() << " ";
-        q.pop();        
+    for (Vector<char>::const_iterator it = postfix.begin(); it != postfix.end(); ++it){
+        cout << *it;
     }
     cout << endl;
     

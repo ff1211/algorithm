@@ -80,4 +80,9 @@ size_t Josephus(size_t N, size_t M);
 // Check balacing symbols.
 int check_symb_type(char byte);
 int balancing_symb(std::string file_name);
+
+// Infix to Postfix Conversion.
+int check_priority(char op);
+Vector<char> Infix2Postfix(const Vector<char> & infix);
+
 #endif

@@ -1,7 +1,7 @@
 #ifndef VECTOR_TYPE
 #define VECTOR_TYPE
 
-#define DEBUG
+// #define DEBUG
 
 template <typename obj_t>
 class Vector
@@ -22,19 +22,6 @@ public:
         m_size = size;
         m_capacity = size + SPARE_CAPACITY;
         m_data = new obj_t[m_capacity];
-    }
-
-    //use arrary for construction
-    Vector(obj_t * array) {
-        #ifdef DEBUG
-        std::cout << "Constructor is called!" << std::endl;
-        #endif
-        size_t size = 0;
-        while (array[size] != NULL)
-            ++size;
-        m_size = size;
-        m_capacity = size;
-        m_data = std::move(array);
     }
 
     //copy constructor
@@ -131,7 +118,7 @@ public:
             reserve(2 * m_size + 1);
         
         m_data[m_size] = val;
-        m_size++;
+        ++m_size;
     }
     //rvalue reference
     void push_back(obj_t && val) {
@@ -139,7 +126,7 @@ public:
             reserve(2 * m_size + 1);
         
         m_data[m_size] = val;
-        m_size++;
+        ++m_size;
     }
 
     //delete last element
@@ -150,14 +137,20 @@ public:
             m_size--;
     }
 
+    // Reference elements.
+    obj_t & front() { return m_data[0]; } 
+    const obj_t & front() const { return m_data[0]; }
+    obj_t & back() { return m_data[m_size-1]; } 
+    const obj_t & back() const { return m_data[m_size-1]; }
+
     //iterator
     typedef obj_t * iterator;
     typedef const obj_t * const_iterator;
-    //begin
-    iterator begin() { return &m_data[0]; }
-    const_iterator begin() const { return &m_data[0]; }
-    //end
+    // non-const
     iterator end() { return &m_data[m_size]; }
+    iterator begin() { return &m_data[0]; }
+    // const
+    const_iterator begin() const { return &m_data[0]; }
     const_iterator end() const { return &m_data[m_size]; }
 };
 #endif
