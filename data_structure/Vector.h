@@ -1,7 +1,11 @@
 #ifndef VECTOR_TYPE
 #define VECTOR_TYPE
 
-// #define DEBUG
+#define DEBUG
+
+#ifdef DEBUG
+static size_t class_num = 0;
+#endif
 
 template <typename obj_t>
 class Vector
@@ -17,7 +21,8 @@ public:
     //constructor
     Vector(size_t size = 0) {
         #ifdef DEBUG
-        std::cout << "Constructor is called!" << std::endl;
+        std::cout << class_num << "'s "<< "constructor is called!" << std::endl;
+        ++class_num;
         #endif
         m_size = size;
         m_capacity = size + SPARE_CAPACITY;
@@ -27,7 +32,8 @@ public:
     //copy constructor
     Vector(const Vector & rhs) {
         #ifdef DEBUG
-        std::cout << "Copy constructor is called!" << std::endl;
+        std::cout << class_num << "'s "<< "copy constructor is called!" << std::endl;
+        ++class_num;
         #endif
         m_size = rhs.m_size;
         m_capacity = rhs.m_capacity;
@@ -37,11 +43,12 @@ public:
     //move constructor
     Vector(Vector && rhs) {
         #ifdef DEBUG
-        std::cout << "Move constructor is called!" << std::endl;
+        std::cout << class_num << "'s "<< "move constructor is called!" << std::endl;
+        ++class_num;
         #endif
         m_size = rhs.m_size;
         m_capacity = rhs.m_capacity;
-        m_data = rhs.m_data;
+        m_data = std::move(rhs.m_data);
 
         rhs.m_data = nullptr;
         rhs.m_capacity = 0;
@@ -50,7 +57,8 @@ public:
     //copy assignment
     Vector &operator=(const Vector & rhs) {
         #ifdef DEBUG
-        std::cout << "Copy assignment is called!" << std::endl;
+        std::cout << class_num << "'s "<< "copy assignment is called!" << std::endl;
+        ++class_num;
         #endif
         if(this == &rhs) return *this;
 
@@ -65,7 +73,8 @@ public:
     // move assignment
     Vector &operator=(Vector && rhs) {
         #ifdef DEBUG
-        std::cout << "Move assignment is called!" << std::endl;
+        std::cout << class_num << "'s "<< "move assignment is called!" << std::endl;
+        ++class_num;
         #endif
         if (this == &rhs) return *this;
 

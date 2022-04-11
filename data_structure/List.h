@@ -210,12 +210,12 @@ public:
 
     // add element at the end.
     void push_back(const obj_t & val) { insert(m_tail, val); }
-    void push_back(obj_t && val) { insert(m_tail, val); }
+    void push_back(obj_t && val) { insert(m_tail, std::move(val)); }
     // delete element at the end.
     void pop_back() { erase(--end()); }
     // add element at the beginning.
     void push_front(const obj_t & val) { insert(m_head, val); }
-    void push_front(obj_t && val) { insert(m_head, val); }
+    void push_front(obj_t && val) { insert(m_head, std::move(val)); }
     // delete element at the beginning.
     void pop_front() { erase(begin()); }
 

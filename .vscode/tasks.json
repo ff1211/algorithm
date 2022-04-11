@@ -14,6 +14,7 @@
           "${fileDirname}/../main.cpp",
           "${fileDirname}/../seq/seq_alg.cpp",
           "${fileDirname}/../data_structure/operation.cpp",
+          // "-fno-elide-constructors",
           "-o",
           "${fileDirname}/main"
         ], 

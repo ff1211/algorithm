@@ -78,12 +78,12 @@ public:
     // Rvalue reference.
     void push(obj_t && val) {
         if(m_size == 0) {
-            m_data[m_back] = val;
+            m_data[m_back] = std::move(val);
         } else {
             if(full())
                 reserve(2 * m_capacity);
             m_back = (m_back == (m_capacity-1))? 0 : m_back+1;
-            m_data[m_back] = val;
+            m_data[m_back] = std::move(val);
         }
         ++m_size;
     }
