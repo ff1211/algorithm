@@ -12,18 +12,20 @@ protected:
         // left node and right node.
         node *left;
         node *right;
+        // subtree height
+        int height;
         // copy constructor
-        node(const obj_t & d, node * l, node * r){
-            data = d;
-            left = l;
-            right = r;
-        }
+        node(const obj_t & d, node * l, node * r, int h = 0) :
+            data    ( d     ),
+            left    ( l     ),
+            right   ( r     ),
+            height  ( h     ) { }
         // move constructor
-        node(obj_t && d, node * l, node * r){
-            data = std::move(d);
-            left = l;
-            right = r;
-        }
+        node(obj_t && d, node * l, node * r, int h = 0) :
+            data    ( std::move(d)  ),
+            left    ( l     ),
+            right   ( r     ),
+            height  ( h     ) { }
     };
 
     node * m_root;
@@ -87,8 +89,8 @@ protected:
             insert(x, t->left);
         else if(x > t->data)
             insert(x, t->right);
-            
-        balance();
+        this->update_height(t);
+        this->balance(t);
     }
     // Rvalue reference.
     void insert(obj_t && x, node * & t) {
@@ -98,20 +100,22 @@ protected:
             insert(std::move(x), t->left);
         else if(x > t->data)
             insert(std::move(x), t->right);
-        
-        balance();
+        this->update_height(t);
+        this->balance(t);
     }
     // Internal method to remove from a subtree.
     // x is the item to remove.
     // t is the node that roots the subtree.
     // Set the new root of the subtree.
-    void remove(const obj_t & x, node * & t) {
+    // Return true if successfully removed, otherwise return false.
+    bool remove(const obj_t & x, node * & t) {
         if(t == nullptr)
-            return;
+            return false;
+        bool if_removed;
         if(x < t->data)
-            remove(x, t->left);
+            if_removed = remove(x, t->left);
         else if(x > t->data)
-            remove(x, t->right);
+            if_removed = remove(x, t->right);
         else {
             if(t->left != nullptr && t->right != nullptr) {
                 t->data = find_min(t->right)->data;
@@ -121,21 +125,42 @@ protected:
                 t = (t->left == nullptr)? t->right : t->left;
                 delete old_node;
             }
+            if_removed = true;
         }
-        balance();
+        this->update_height(t);
+        this->balance(t);
+        return if_removed;
     }
 
-    // Internal method to balance the tree.
-    virtual void balance() {};
+    // Internal method to print tree.
+    // t is the node that roots the subtree.
+    // out is the out stream.
+    void print_tree(const std::string& prefix, node * t, bool is_left, std::ostream & out) const {
+        if(t == nullptr)
+            return;
+        out << prefix;
+        out << (is_left ? "├──" : "└──" );
+
+        // print the value of the node
+        out << t->data << std::endl;
+
+        // enter the next tree level - left and right branch
+        print_tree(prefix + (is_left ? "│   " : "    "), t->left, true, out);
+        print_tree(prefix + (is_left ? "│   " : "    "), t->right, false, out);        
+    }
+    // Internal method to update height.
+    virtual void update_height(node * t) { }
+    // Internal method to balance tree.
+    virtual void balance(node * & t) { }
 public:
     // Constructor
-    Bst() { m_root = nullptr; }
+    Bst() { this->m_root = nullptr; }
     // Copy constructor
-    Bst(const Bst & rhs) { m_root = clone(rhs.root); }
+    Bst(const Bst & rhs) { m_root = clone(rhs.m_root); }
     // Move constructor
     Bst(Bst && rhs) { 
-        m_root = rhs.root;
-        rhs.root = nullptr;
+        this->m_root = rhs.m_root;
+        rhs.m_root = nullptr;
     }
     // Destructor
     ~Bst() { make_empty(m_root); }
@@ -155,7 +180,9 @@ public:
     void insert(const obj_t & x) { insert(x, m_root); }
     void insert(obj_t && x) { insert(std::move(x), m_root); } // Rvalue reference.
     // Remove element.
-    void remove(const obj_t & x) { remove(x, m_root); }
+    bool remove(const obj_t & x) { return remove(x, m_root); }
+    // Print tree.
+    void print_tree(std::ostream & out) { print_tree("", m_root, false, out); out << std::endl; }
 };
 
 
