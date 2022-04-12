@@ -89,7 +89,6 @@ protected:
             insert(x, t->left);
         else if(x > t->data)
             insert(x, t->right);
-        this->update_height(t);
         this->balance(t);
     }
     // Rvalue reference.
@@ -100,7 +99,6 @@ protected:
             insert(std::move(x), t->left);
         else if(x > t->data)
             insert(std::move(x), t->right);
-        this->update_height(t);
         this->balance(t);
     }
     // Internal method to remove from a subtree.
@@ -127,7 +125,6 @@ protected:
             }
             if_removed = true;
         }
-        this->update_height(t);
         this->balance(t);
         return if_removed;
     }
@@ -148,8 +145,6 @@ protected:
         print_tree(prefix + (is_left ? "│   " : "    "), t->left, true, out);
         print_tree(prefix + (is_left ? "│   " : "    "), t->right, false, out);        
     }
-    // Internal method to update height.
-    virtual void update_height(node * t) { }
     // Internal method to balance tree.
     virtual void balance(node * & t) { }
 public:

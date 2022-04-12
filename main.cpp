@@ -12,9 +12,10 @@ int main(int argc, char * argv[]){
     for (int i = 0; i < 7; ++i)
         a.insert(aa[i]);
     a.print_tree(cout);
-    cout << endl;
+    cout << "a's height"<< a.height() << endl;
     for (int i = 16; i > 7; --i)
         a.insert(i);
     a.print_tree(cout);
+    cout << "a's height"<< a.height() << endl;
     return 0;
 }

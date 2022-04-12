@@ -20,12 +20,6 @@ protected:
             return nullptr;
         return new node(t->data, clone(t->left), clone(t->right), t->height);
     }
-    // Internal method to update height.
-    void update_height(node * t) {
-        if(t == nullptr)
-            return;
-        t->height = std::max( height(t->left), height(t->right) ) + 1; 
-    }
     // Internal method to balance the tree.
     // t is the node that roots the subtree.
     void balance(node * & t) {
@@ -42,7 +36,7 @@ protected:
             else
                 rotate_rl(t);
         }
-        update_height(t);
+        t->height = std::max( height(t->left), height(t->right) ) + 1; 
     }
     // Rotate binary tree node with left left child.
     void rotate_ll(node * & k2) {
